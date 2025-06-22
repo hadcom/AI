@@ -5,11 +5,17 @@ function DeckButton({ item, onClick }) {
   return e(
     'button',
     {
-      className: 'bg-gray-700 hover:bg-gray-600 active:bg-gray-500 p-4 rounded-lg m-1 flex flex-col items-center',
+      className:
+        'bg-gray-700 hover:bg-gray-600 active:bg-gray-500 rounded-xl m-2 p-2 w-28 h-28 flex flex-col items-center justify-center shadow-md',
       onClick,
     },
-    item.icon ? e('img', { src: item.icon, className: 'h-6 w-6 mb-1' }) : null,
-    e('span', null, item.label)
+    item.icon
+      ? e('img', {
+          src: item.icon,
+          className: 'w-16 h-16 object-contain mb-1 rounded',
+        })
+      : null,
+    e('span', { className: 'text-xs text-center' }, item.label)
   );
 }
 
@@ -20,6 +26,16 @@ function App() {
   useEffect(() => {
     window.api.loadConfig().then(cfg => {
       setPage(cfg.buttons || []);
+    });
+  }, []);
+
+  useEffect(() => {
+    window.api.onHotkey(() => {
+      const onUp = () => {
+        window.api.hideWindow();
+        window.removeEventListener('keyup', onUp);
+      };
+      window.addEventListener('keyup', onUp);
     });
   }, []);
 
@@ -42,10 +58,15 @@ function App() {
   return e(
     'div',
     null,
-    stack.length > 0 && e('button', { className: 'mb-2', onClick: goBack }, 'Back'),
+    stack.length > 0 &&
+      e(
+        'button',
+        { className: 'mb-2 text-sm underline', onClick: goBack },
+        'Back'
+      ),
     e(
       'div',
-      { className: 'grid grid-cols-3 gap-2' },
+      { className: 'grid grid-cols-3 gap-3' },
       page.map((item, idx) =>
         e(DeckButton, { key: idx, item, onClick: () => openItem(item) })
       )

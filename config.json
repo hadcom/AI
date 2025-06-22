@@ -1,11 +1,12 @@
 {
   "hotkey": "CommandOrControl+Shift+D",
   "buttons": [
-    { "label": "Notepad", "action": "notepad.exe" },
+    { "label": "Notepad", "action": "notepad.exe", "icon": "icons/notepad.png" },
     {
       "label": "Folder",
+      "icon": "icons/folder.png",
       "children": [
-        { "label": "Script", "action": "./test.sh" }
+        { "label": "Script", "action": "./test.sh", "icon": "icons/script.png" }
       ]
     }
   ]

@@ -9,10 +9,12 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 500,
     height: 400,
+    frame: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
     autoHideMenuBar: true,
+    show: false,
   });
 
   mainWindow.loadFile('index.html');
@@ -32,12 +34,12 @@ app.whenReady().then(() => {
   const config = loadConfig();
   if (config.hotkey) {
     globalShortcut.register(config.hotkey, () => {
-      if (mainWindow.isVisible()) {
-        mainWindow.hide();
-      } else {
-        mainWindow.show();
-      }
+      mainWindow.show();
+      mainWindow.focus();
+      mainWindow.webContents.send('hotkey');
     });
+  } else {
+    mainWindow.show();
   }
 
   app.on('activate', () => {
@@ -52,6 +54,10 @@ app.on('window-all-closed', () => {
 ipcMain.on('launch', (event, command) => {
   if (!command) return;
   spawn(command, { shell: true, detached: true });
+});
+
+ipcMain.on('hide-window', () => {
+  mainWindow.hide();
 });
 
 ipcMain.handle('load-config', () => {

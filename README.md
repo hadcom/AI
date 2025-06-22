@@ -6,8 +6,8 @@ This project is a lightweight Electron application inspired by Elgato's Virtual 
 - **Grid-based layout** that adapts to the window size.
 - **Nested folders** via JSON configuration.
 - **Launch commands** such as `.exe`, `.sh`, `.bat`, or `.ps1` files.
-- **Custom icons** per button (PNG, SVG or emoji).
-- **Global hotkey** to toggle the window (set in `config.json`).
+- **Custom icons** per button (use crisp 512x512 PNG/SVG or emoji).
+- **Momentary hotkey** opens the window while held.
 - **Simple JSON profiles** for easy editing.
 
 ## Getting Started
@@ -20,6 +20,8 @@ This project is a lightweight Electron application inspired by Elgato's Virtual 
    npm start
    ```
 
-Edit `config.json` to customize the buttons, icons and hotkey. When a button has a `children` array, clicking it opens a subpage. Otherwise its `action` command is executed using the system shell.
+Edit `config.json` to customize the buttons, icons and hotkey. Provide 512x512 PNG or SVG images for the best looking icons. When a button has a `children` array, clicking it opens a subpage. Otherwise its `action` command is executed using the system shell.
+
+The window has no title bar and hides automatically once you release the hotkey that summoned it, mimicking Elgato's overlay.
 
 This repository does not bundle any binaries. Build Electron distributions with the tool of your choice once dependencies are installed.
