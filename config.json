@@ -1,0 +1,12 @@
+{
+  "hotkey": "CommandOrControl+Shift+D",
+  "buttons": [
+    { "label": "Notepad", "action": "notepad.exe" },
+    {
+      "label": "Folder",
+      "children": [
+        { "label": "Script", "action": "./test.sh" }
+      ]
+    }
+  ]
+}
